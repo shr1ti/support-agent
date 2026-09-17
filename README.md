@@ -20,7 +20,7 @@ with a reason.
 
 ## Pipeline
 
-```text
+
 Customer Message
        |
        v
@@ -63,7 +63,7 @@ driver_metrics
 refund
 The golden set is imbalanced, so macro-F1 is reported alongside accuracy.
 
-Intent Classification Results
+## Intent Classification Results
 | Model                        |  Accuracy |  Macro-F1 |
 | ---------------------------- | --------: | --------: |
 | Majority class               |     30.0% |      4.2% |
@@ -72,7 +72,7 @@ Intent Classification Results
 
 The LLM outperformed both baselines on the held-out golden set, although performance varied considerably across intents, particularly for rare classes.
 
-Escalation Results
+## Escalation Results
 | Metric    |    Result |
 | --------- | --------: |
 | Accuracy  | **69.5%** |
@@ -80,7 +80,7 @@ Escalation Results
 | Recall    | **61.2%** |
 | F1        | **63.0%** |
 
-Confusion matrix:
+## Confusion matrix:
 |            | Predicted No | Predicted Yes |
 | ---------- | -----------: | ------------: |
 | Actual No  |           87 |            28 |
@@ -88,7 +88,7 @@ Confusion matrix:
 
 Escalation was evaluated separately from intent because the customer's issue type and whether human intervention is required are distinct decisions.
 
-Response Quality
+## Response Quality
 
 Generated responses were manually evaluated on 40 examples using a 1–3 scale.
 | Dimension       | Mean / 3 |
@@ -100,7 +100,7 @@ Generated responses were manually evaluated on 40 examples using a 1–3 scale.
 
 The system scored highest on appropriateness. Helpfulness and actionability were lower, reflecting a limitation of the historical support data: many retrieved responses are generic support-routing messages rather than substantive resolutions.
 
-LLM-as-Judge Agreement
+## LLM-as-Judge Agreement
 
 20 responses were evaluated by both a human and an LLM judge using the same 1–3 rubric.
 
@@ -114,8 +114,8 @@ Quadratic weighted Cohen's κ:
 
 The judge showed much stronger agreement with the human evaluator for appropriateness than for the other dimensions. The sample is small (n=20), so these results are treated as calibration findings rather than general estimates of judge reliability.
 
-Top Failure Modes
-1. benefits_other overprediction
+## Top Failure Modes
+## 1. benefits_other overprediction
 
 @115877 Justice [link]
 
@@ -126,7 +126,7 @@ The broad benefits_other class had only 0.12 precision, suggesting it is often u
 
 Hypothesis: insufficient evidence for a specific intent causes the model to fall back to the catch-all category.
 
-2. Fare/charge vs. cancellation ambiguity
+## 2. Fare/charge vs. cancellation ambiguity
 
 why is it that I get fined $5 if I cancel an Uber but get nothing in return...
 
@@ -135,7 +135,7 @@ Model: fare_charge
 
 Hypothesis: the model focuses on the financial consequence instead of the underlying cancellation issue.
 
-3. Driver issue vs. cancellation confusion
+## 3. Driver issue vs. cancellation confusion
 
 Cancellation is fine. He didn't even bother to notify me. I called him myself.
 
@@ -144,7 +144,7 @@ Model: driver_issue
 
 Hypothesis: ride complaints frequently contain overlapping driver-behaviour and cancellation signals.
 
-4. Rare-intent sparsity
+## 4. Rare-intent sparsity
 
 Several intents had very little evaluation support:
 | Intent               | Support |   F1 |
@@ -155,7 +155,7 @@ Several intents had very little evaluation support:
 
 Hypothesis: limited examples make it difficult to learn reliable boundaries for rare intents.
 
-5. Multi-issue messages
+## 5. Multi-issue messages
 
 What's with this $300 charge?... driver never even showed... ride I never took...
 
@@ -164,7 +164,7 @@ Model: refund
 
 Hypothesis: when several valid issues appear in one message, the model may select a secondary consequence rather than the primary complaint.
 
-What Is Misleading About the Headline Number?
+## What Is Misleading About the Headline Number?
 
 The LLM's 56.0% accuracy does not fully describe system quality.
 
@@ -174,7 +174,7 @@ Intent accuracy also does not measure response usefulness or escalation quality.
 
 Finally, historical support responses are frequently procedural. A retrieved case can therefore be highly similar to the customer's issue while still providing little information for actually resolving it.
 
-Key Design Decisions
+## Key Design Decisions
 Selected Uber_Support because it provided a large set of varied support interactions.
 Constructed customer-support pairs using tweet reply relationships.
 Created a 100-example development set and an independent 200-example golden set.
@@ -191,6 +191,7 @@ Used LLM-as-judge on 20 examples to measure judge-human agreement.
 Evaluated response quality on 40 examples rather than relying only on automated judging.
 Kept rare intents visible in evaluation rather than hiding their low performance through aggregation.
 Reproduction
+
 Requirements
 
 Python 3.11+.
@@ -232,7 +233,7 @@ Failure analysis
 
 Saved evaluation outputs are included so headline results can be inspected without rerunning all LLM API calls.
 
-Project Structure
+## Project Structure
 
 SUPPORT-AGENT/
 ├── data/
@@ -262,7 +263,7 @@ https://www.kaggle.com/datasets/thoughtvector/customer-support-on-twitter/data
 The dataset contains customer-support interactions between consumers and
 brand support accounts on Twitter.
 
-Limitations
+## Limitations
 Golden evaluation set contains only 200 examples.
 Intent distribution is imbalanced.
 Several intents have very small support.
@@ -271,10 +272,12 @@ Historical responses are often generic support-routing messages.
 LLM-as-judge agreement was evaluated on only 20 examples.
 API-based evaluation depends on external model availability and rate limits.
 
-Next Week
+## Next Week
 Collect more examples for rare intents.
 Improve boundaries between fare, cancellation, driver, and refund intents.
 Replace lexical retrieval with semantic embeddings.
 Improve response specificity with structured support actions.
 Expand human evaluation and recalibrate the LLM judge.
 Evaluate the complete end-to-end pipeline with predicted rather than human-labelled intent passed to escalation.
+
+```text
