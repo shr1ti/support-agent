@@ -20,7 +20,7 @@ with a reason.
 
 ## Pipeline
 
-
+```text
 Customer Message
        |
        v
@@ -34,7 +34,7 @@ Similar-case         Escalation
        |
        v
 Grounded Response
-
+```
 ## Dataset & Evaluation
 
 This project uses the Twitter Customer Support (TWCS) dataset.
@@ -234,7 +234,7 @@ Failure analysis
 Saved evaluation outputs are included so headline results can be inspected without rerunning all LLM API calls.
 
 ## Project Structure
-
+```text
 SUPPORT-AGENT/
 ├── data/
 │   ├── uber_dev_set.csv
@@ -252,7 +252,7 @@ SUPPORT-AGENT/
 ├── .gitignore
 ├── requirements.txt
 └── README.md
-
+```
 ## Data Source
 
 This project uses the **Customer Support on Twitter** dataset by Thought Vector.
