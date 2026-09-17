@@ -192,44 +192,53 @@ Evaluated response quality on 40 examples rather than relying only on automated 
 Kept rare intents visible in evaluation rather than hiding their low performance through aggregation.
 Reproduction
 
-Requirements
+## Requirements
 
-Python 3.11+.
+- Python 3.11+
 
-Install dependencies:
+### Install dependencies
 
+```bash
 pip install -r requirements.txt
-Dataset
+```
+
+### Dataset
 
 Place the TWCS dataset at:
 
+```text
 data/twcs.csv
+```
 
 The raw dataset is excluded from version control.
 
-API
+### API
 
-Create .env in the project root:
+Create `.env` in the project root:
 
+```env
 GROQ_API_KEY=your_api_key_here
-Run
+```
+
+### Run
 
 Open and run:
 
+```text
 notebooks/01_explore_dataset.ipynb
+```
 
 The notebook contains the complete workflow:
 
-Dataset processing
-Uber pair extraction
-Labelling
-Baselines
-LLM classification
-Retrieval
-Response generation
-Escalation
-Evaluation
-Failure analysis
+1. Dataset processing
+2. Uber pair extraction
+3. Labelling
+4. Baselines
+5. LLM classification
+6. Retrieval
+7. Response generation
+8. Escalation evaluation
+9. Failure analysis
 
 Saved evaluation outputs are included so headline results can be inspected without rerunning all LLM API calls.
 
